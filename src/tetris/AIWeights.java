@@ -21,6 +21,7 @@ public class AIWeights {
     public static final short ROW_TRANS = 11;
     public static final short LINE = 12;
 
+    private static int weightCount;
     public static final HashMap<Short, Weight> weightData = new HashMap<Short, Weight>();
     {
         // TODO: Look up, revise and document each of these weights
@@ -37,16 +38,17 @@ public class AIWeights {
         weightData.put( COL_TRANS, new Weight("Col. Transitions", "Vertical transitions between filled and empty spaces") );
         weightData.put( ROW_TRANS, new Weight("Row Transitions", "Horizontal transitions between filled and empty spaces") );
         weightData.put( LINE, new Weight("Lines", "Count of filled rows") );
+        weightCount = weightData.size();
     }
     
-    private static final int weightCount = weightData.size();
+     
 
     private double[] weights;
 
-    public AIWeights() {
-        weights = new double[weightCount];
+    public AIWeights() {        
+        this.weights = new double[weightCount];
         for (int i = 0; i < weightCount; i++) {
-            weights[i] = 0.0;
+            this.weights[i] = 0.0;
         }
     }
 

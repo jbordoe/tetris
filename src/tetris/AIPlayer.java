@@ -30,8 +30,13 @@ public class AIPlayer implements PlayerInterface{
 
 
     public AIPlayer(double[] weights) {
-        //this.weights = weights;
+        this.weights = weights;
         Pathfinder.setWeights(this.weights);
+        
+        for (double d: weights) {
+            System.out.print(d + ",");            
+        }
+        System.out.println();
     }
 
     public void setGame(Game game) {
