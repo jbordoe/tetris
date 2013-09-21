@@ -48,19 +48,19 @@ public class App extends JFrame {
         0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0
     };
+    
+    AIWeights weights = new AIWeights();
 
     static final short[] weightsToDisplay = new short[]{
         AIWeights.HEIGHT,
         AIWeights.GAPS,
         AIWeights.LINE,
         AIWeights.BLOCKS,
+        AIWeights.COL_TRANS
     };
+    
+    public static HashMap<Short, TextField> textFieldWeightMap = new HashMap<Short, TextField>();
 
-    static final HashMap<Short, Double> weightTextFieldMap;
-    static {
-        weightTextFieldMap = new HashMap<Short, Double>();
-        //weightTextFieldMap.put(AIWeights.HEIGHT, )
-    }
     /** frames-per-second */
     final int frameRate = 20000;
 
@@ -86,6 +86,7 @@ public class App extends JFrame {
 
     public void runGame() {
         PlayerInterface player = new AIPlayer(dumbWeights);
+        
         //KeyboardPlayer player = new KeyboardPlayer();
         //addKeyListener(player.getKeyAdapter());
         
@@ -134,33 +135,8 @@ public class App extends JFrame {
         gridLabel = new JLabel(new ImageIcon(gridImg));
 
         gridPanel.add(gridLabel, BorderLayout.CENTER);
-
-        final JPanel textPanel = new JPanel(new FlowLayout());
-        //TODO: should have a vector of fields that can map easily to the right weight
-        JPanel weight1Label = new JPanel(new BorderLayout());
-        TextField weight1 = new TextField(8);
-        weight1Label.add(new Label("Line count"), BorderLayout.NORTH);
-        weight1Label.add(weight1, BorderLayout.CENTER);
-
-        JPanel weight2Label = new JPanel(new BorderLayout());
-        TextField weight2 = new TextField(8);
-        weight2Label.add(new Label("Max height"), BorderLayout.NORTH);
-        weight2Label.add(weight2, BorderLayout.CENTER);
-
-        JPanel weight3Label = new JPanel(new BorderLayout());
-        TextField weight3 = new TextField(8);
-        weight3Label.add(new Label("Total blocks"), BorderLayout.NORTH);
-        weight3Label.add(weight3, BorderLayout.CENTER);
-
-        JPanel weight4Label = new JPanel(new BorderLayout());
-        TextField weight4 = new TextField(8);
-        weight4Label.add(new Label("Gap count"), BorderLayout.NORTH);
-        weight4Label.add(weight4, BorderLayout.CENTER);
-
-        textPanel.add(weight1Label);
-        textPanel.add(weight2Label);
-        textPanel.add(weight3Label);
-        textPanel.add(weight4Label);
+        
+        final JPanel textPanel = getWeightsPanel();
 
         gridPanel.add(textPanel, BorderLayout.SOUTH);
 
@@ -213,6 +189,38 @@ public class App extends JFrame {
                 System.exit(0);
             }
         });
+    }
+    
+    private JPanel getWeightsPanel() {
+        int weightCount = weightsToDisplay.length;
+        
+        int cols = 4;
+        int rows = new Double(Math.ceil(weightCount/cols)).intValue();
+        
+        final JPanel weightInputPanel = new JPanel( new GridLayout(cols, rows, 2 ,2) );
+        
+        for (int i = 0; i < weightCount; i++) {
+            short weightKey = weightsToDisplay[i];
+            AIWeights.Weight weightData = weights.getWeightData(weightKey);
+            String weightLabel = weightData.getLabel();
+            
+            JPanel weightPanel = new JPanel(new BorderLayout());
+            TextField weightText = new TextField(8);
+            
+            textFieldWeightMap.put(weightKey, weightText);
+            
+            weightPanel.add(new Label(weightLabel), BorderLayout.NORTH);
+            weightPanel.add(weightText, BorderLayout.CENTER);
+            
+            int currentCol = i % cols;
+            int currentRow = new Double(Math.ceil(i/cols)).intValue();
+            
+            weightInputPanel.add(weightPanel);            
+        }      
+        JPanel textPanel = new JPanel(new FlowLayout());
+        textPanel.add(weightInputPanel);
+        
+        return textPanel;
     }
 
     private void updateGridImage() {
