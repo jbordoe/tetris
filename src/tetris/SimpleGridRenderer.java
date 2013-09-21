@@ -73,10 +73,10 @@ public class SimpleGridRenderer implements GridRenderer {
         try {
             for (int i = 0; i <
                     7; i++) {
-                blocks[i] = ImageIO.read(new File("C:/Users/Jesse-SouljaBoy-FanB/Documents/Code/Java/Tetris/img/block-" + i + ".gif"));
+                blocks[i] = ImageIO.read(new File("img/block-" + i + ".gif"));
             }
 
-            highlight = ImageIO.read(new File("C:/Users/Jesse-SouljaBoy-FanB/Documents/Code/Java/Tetris/img/block-highlight.gif"));
+            highlight = ImageIO.read(new File("img/block-highlight.gif"));
         } catch (Exception e) {
             //...
         }
