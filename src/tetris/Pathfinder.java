@@ -171,7 +171,7 @@ public class Pathfinder {
     }
 
     /**
-     * Traverses heirarchy of state to extract stack of moves to perform in order
+     * Traverses hierarchy of state to extract stack of moves to perform in order
      * to move from beginning state to goal state
      * @param s
      * @return
@@ -193,7 +193,7 @@ public class Pathfinder {
      * @param state
      */
     private static void rank(State state, Grid grid, Shape shape) {
-        double lineWeight = 0.1;
+        
         double heightWeight = weights[0];
         double gapWeight = weights[1];
         double connectedWeight = weights[2];
@@ -206,6 +206,7 @@ public class Pathfinder {
         double landingWeight = weights[9];
         double colTransWeight = weights[10];
         double rowTransWeight = weights[11];
+        double lineWeight = weights[12];
 
         byte[][] updatedGrid = grid.updateGrid(state.getX(), state.getY(), shape.getState(state.getRot()));
         int[] gapData = countGaps(updatedGrid);

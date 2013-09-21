@@ -15,12 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
+import javax.swing.JApplet;
 
 /**
  *
  * @author Jesse Bordoe
  */
-public class App extends JFrame {
+public class TetrisApplet extends JApplet {
 
     private BufferedImage gridImg;
     GridRenderer gridRenderer;
@@ -31,9 +32,9 @@ public class App extends JFrame {
     /** height of grid, in blocks */
     final int gridHeight = 22;
     /** width of blocks, in pixels */
-    final int blockWidth = 20;
+    final int blockWidth = 10;
     /** height of blocks, in pixels */
-    final int blockHeight = 20;
+    final int blockHeight = 10;
     double[] dumbWeights = new double[]{
         0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0,
@@ -60,20 +61,26 @@ public class App extends JFrame {
     // GUI STUFF
     JLabel gridLabel;
 
-    public App() {
-        super("737R15");
+    public TetrisApplet() {
+//        super("737R15");
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(final String[] args) {
-        App app = new App();
-        app.setupGUI();
+    @Override
+    public void init() {
+        //GUIApp app = new GUIApp();
+        setupGUI();
         
         while (true) {
-            app.runGame();
+            runGame();
         }
+    }
+    
+    @Override
+    public void start() {
+        repaint();
     }
 
     public void runGame() {
@@ -164,20 +171,20 @@ public class App extends JFrame {
 
         gridPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         add(gridPanel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setResizable(false);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+//        pack();
+//        setResizable(false);
         setVisible(true);
+//
+//        requestFocus();
 
-        requestFocus();
-
-        this.addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+//        this.addWindowListener(new WindowAdapter() {
+//
+//            @Override
+//            public void windowClosing(WindowEvent e) {
+//                System.exit(0);
+//            }
+//        });
     }
     
     private JPanel getWeightsPanel() {

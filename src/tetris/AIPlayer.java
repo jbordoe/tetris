@@ -1,7 +1,6 @@
 package tetris;
 
 import java.util.Stack;
-import java.util.Random;
 
 /**
  *
