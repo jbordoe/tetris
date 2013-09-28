@@ -21,14 +21,14 @@ class Game implements Trainable {
     /** height of grid, in blocks */
     int gridHeight = 22;
     /** count of completed rows */
-    int rows = 0;
+    private int rowsCompleted = 0;
     /** count of moves made by player. Each time a shape is set it
      * counts as one move
      */
     int turns = 0;
     /** score for player */
     // TODO: find out rules for tetris scoring and implement
-    int score = 0;
+    private int score = 0;
     PlayerInterface player;
     BufferedImage highlight;
     /** time of the last downward movement (forced or manual) */
@@ -91,6 +91,20 @@ class Game implements Trainable {
      */
     public void setPlayState(PlayState playState) {
         this.playState = playState;
+    }
+
+    /**
+     * @return the score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * @return the rows
+     */
+    public int getRowsCompleted() {
+        return rowsCompleted;
     }
 
 
@@ -191,7 +205,7 @@ class Game implements Trainable {
     }
 
     public void initGame() {
-        rows = 0;
+        rowsCompleted = 0;
         turns = 0;
         gridHandler = new Grid(gridWidth, gridHeight);
         nextShape = new Shape();
@@ -231,7 +245,7 @@ class Game implements Trainable {
         }
 
 
-        return rows;
+        return getRowsCompleted();
     }
 
     /**
@@ -342,7 +356,7 @@ class Game implements Trainable {
         gridHandler.set(getShapeX(), getShapeY(),currentShape.getGrid());
         int lines = gridHandler.countLines(getShapeY());
         if (lines > 0) {
-            rows += lines;
+            rowsCompleted += lines;
             if (display) {
                 try {
                     Thread.sleep(100);

@@ -62,6 +62,7 @@ public class TetrisApplet extends JApplet {
 
     // GUI STUFF
     JLabel gridLabel;
+    JLabel scoreLabel;
 
     /**
      * @param args the command line arguments
@@ -168,6 +169,10 @@ public class TetrisApplet extends JApplet {
         JSlider fpsSlider = new JSlider(JSlider.VERTICAL, MIN_FPS, MAX_FPS, framesPerSecond);
         fpsSlider.addChangeListener(new SliderListener());
         this.add(fpsSlider, BorderLayout.WEST);
+        
+        scoreLabel = new JLabel("Rows completed: 0");
+        this.add(scoreLabel, BorderLayout.NORTH);
+        
 
         gridPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         this.add(gridPanel);
@@ -225,6 +230,10 @@ public class TetrisApplet extends JApplet {
 
     private void updateGridImage() {
         BufferedImage gridImage = gridRenderer.renderGrid(game);
+        
+        int currentScore = game.getRowsCompleted();
+        scoreLabel.setText("Rows completed: " + currentScore);
+        
         gridLabel.setIcon(new ImageIcon(gridImage));
     }
 
@@ -245,7 +254,11 @@ public class TetrisApplet extends JApplet {
 
         public void stateChanged(ChangeEvent e) {
             JSlider source = (JSlider) e.getSource();
-                framesPerSecond = (int) source.getValue();
+            int sliderValue = (int) source.getValue();
+            double quotient = 4;
+            framesPerSecond = (int) Math.floor(
+                    Math.pow(sliderValue, quotient) * MAX_FPS
+                    / (Math.pow(MAX_FPS, quotient))) + 1;
         }
     }
 }
