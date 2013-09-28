@@ -3,3 +3,4 @@ build
 img
 manifest.xf
 files
+!/resources/img/

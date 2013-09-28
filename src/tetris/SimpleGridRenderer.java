@@ -3,6 +3,7 @@ package tetris;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 import javax.imageio.ImageIO;
 
 /**
@@ -71,12 +72,12 @@ public class SimpleGridRenderer implements GridRenderer {
     private void loadImages() {
         blocks = new BufferedImage[7];
         try {
-            for (int i = 0; i <
-                    7; i++) {
-                blocks[i] = ImageIO.read(new File("img/block-" + i + ".gif"));
+            for (int i = 0; i < 7; i++) {
+                URL imageURL = this.getClass().getClassLoader().getResource("img/block-" + i + ".gif");
+                blocks[i] = ImageIO.read(imageURL);
             }
-
-            highlight = ImageIO.read(new File("img/block-highlight.gif"));
+            URL highlightURL = this.getClass().getClassLoader().getResource("img/block-highlight.gif");
+            highlight = ImageIO.read(highlightURL);
         } catch (Exception e) {
             //...
         }
