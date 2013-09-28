@@ -2,7 +2,6 @@ package tetris;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.net.URL;
 import javax.imageio.ImageIO;
 

@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JApplet;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -51,7 +54,9 @@ public class TetrisApplet extends JApplet {
     public static HashMap<Short, TextField> textFieldWeightMap = new HashMap<Short, TextField>();
 
     /** target frames-per-second */
-    final int frameRate = 20000;
+    static int framesPerSecond = 24;
+    static final int MAX_FPS = 2000;
+    static final int MIN_FPS = 1;
 
     boolean reload = false;
 
@@ -98,7 +103,7 @@ public class TetrisApplet extends JApplet {
                 reload = false;
                 break;
             }
-            nextFrame = System.currentTimeMillis() + (1000 / frameRate);
+            nextFrame = System.currentTimeMillis() + (1000 / framesPerSecond);
             game.nextFrame();
             // TODO: generate new bufferedImage BEFORE sleep
             sleepTime = nextFrame - System.currentTimeMillis();
@@ -159,6 +164,10 @@ public class TetrisApplet extends JApplet {
         buttonPanel.add(goButton);
         buttonPanel.add(resetButton);
         gridPanel.add(buttonPanel, BorderLayout.EAST);
+        
+        JSlider fpsSlider = new JSlider(JSlider.VERTICAL, MIN_FPS, MAX_FPS, framesPerSecond);
+        fpsSlider.addChangeListener(new SliderListener());
+        this.add(fpsSlider, BorderLayout.WEST);
 
         gridPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         this.add(gridPanel);
@@ -232,4 +241,11 @@ public class TetrisApplet extends JApplet {
 //        finalG.drawString("Lines: " + rows, 400, 140);
 //        return image;
 //    }
+    class SliderListener implements ChangeListener {
+
+        public void stateChanged(ChangeEvent e) {
+            JSlider source = (JSlider) e.getSource();
+                framesPerSecond = (int) source.getValue();
+        }
+    }
 }
