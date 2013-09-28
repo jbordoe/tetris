@@ -4,14 +4,11 @@ import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
@@ -61,26 +58,19 @@ public class TetrisApplet extends JApplet {
     // GUI STUFF
     JLabel gridLabel;
 
-    public TetrisApplet() {
-//        super("737R15");
-    }
-
     /**
      * @param args the command line arguments
      */
     @Override
     public void init() {
-        //GUIApp app = new GUIApp();
-        setupGUI();
-        
-        while (true) {
-            runGame();
-        }
+        setupGUI();     
     }
     
     @Override
     public void start() {
-        repaint();
+        while (true) {
+            runGame();
+        }
     }
 
     public void runGame() {
@@ -127,7 +117,8 @@ public class TetrisApplet extends JApplet {
 
     public void setupGUI() {
 
-        final JPanel gridPanel = new JPanel(new BorderLayout());
+        this.setSize(250,450);
+        JPanel gridPanel = new JPanel(new BorderLayout());
 
         int gridImgWidth = gridWidth * blockWidth;
         int gridImgHeight = gridHeight * blockHeight;
@@ -170,21 +161,11 @@ public class TetrisApplet extends JApplet {
         gridPanel.add(buttonPanel, BorderLayout.EAST);
 
         gridPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        add(gridPanel);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-//        pack();
-//        setResizable(false);
-        setVisible(true);
-//
-//        requestFocus();
+        this.add(gridPanel);
 
-//        this.addWindowListener(new WindowAdapter() {
-//
-//            @Override
-//            public void windowClosing(WindowEvent e) {
-//                System.exit(0);
-//            }
-//        });
+        this.setVisible(true);
+        
+
     }
     
     private JPanel getWeightsPanel() {
