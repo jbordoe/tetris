@@ -1,21 +1,14 @@
 package tetris;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Iterator;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.ImageIcon;
-import javax.swing.JApplet;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -64,9 +57,6 @@ public class TetrisApplet extends JApplet {
     JLabel gridLabel;
     JLabel scoreLabel;
 
-    /**
-     * @param args the command line arguments
-     */
     @Override
     public void init() {
         setupGUI();     
@@ -75,6 +65,7 @@ public class TetrisApplet extends JApplet {
     @Override
     public void start() {
         while (true) {
+            System.out.println("running");
             runGame();
         }
     }
@@ -228,6 +219,8 @@ public class TetrisApplet extends JApplet {
         return newWeights;
     }
 
+
+
     private void updateGridImage() {
         BufferedImage gridImage = gridRenderer.renderGrid(game);
         
@@ -250,6 +243,7 @@ public class TetrisApplet extends JApplet {
 //        finalG.drawString("Lines: " + rows, 400, 140);
 //        return image;
 //    }
+
     class SliderListener implements ChangeListener {
 
         public void stateChanged(ChangeEvent e) {
